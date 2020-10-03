@@ -25,6 +25,13 @@ public HelloWorld helloWorldUsingBeanPathVar(@PathVariable String name) {
     return new HelloWorld(String.format("Hello World, %s", name));
 }
 ```
+Adding request body:
+```java
+@PostMapping(path = "/users")
+public User save(@RequestBody User user) {
+    return userDao.save(user);
+}
+```
 
 Enabling debug loggin for spring framework:
 `logging.level.org.springframework=debug`
