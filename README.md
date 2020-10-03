@@ -47,12 +47,14 @@ Custom exception handler:
 @RestController
 public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
+    // Will handle all except UserNotFoundException.class due to below method
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<ExceptionResponse> handleAllExceptions(Exception ex, WebRequest request) throws Exception {
         var exceptionResponse = new ExceptionResponse(ex.getMessage(), new Date());
         return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    // Will handle only UserNotFoundException.class
     @ExceptionHandler(UserNotFoundException.class)
     public final ResponseEntity<ExceptionResponse> handleUserNotFoundException(Exception ex, WebRequest request) throws Exception {
         var exceptionResponse = new ExceptionResponse(ex.getMessage(), new Date());
