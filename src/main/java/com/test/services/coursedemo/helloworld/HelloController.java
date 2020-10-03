@@ -17,4 +17,9 @@ public class HelloController {
     public String helloWorldDirectMapping() {
         return "Hello World!";
     }
+
+    @GetMapping(path = "/helloworldbean")
+    public HelloWorld helloWorldUsingBean() {
+        return new HelloWorld("Hello World!");
+    }
 }
