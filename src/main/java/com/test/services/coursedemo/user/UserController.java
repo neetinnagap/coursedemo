@@ -1,8 +1,11 @@
 package com.test.services.coursedemo.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -22,7 +25,9 @@ public class UserController {
     }
 
     @PostMapping(path = "/users")
-    public User save(@RequestBody User user) {
-        return userDao.save(user);
+    public ResponseEntity<Object> save(@RequestBody User user) {
+        var createdUser = userDao.save(user);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 }

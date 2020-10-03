@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class UserDao {
@@ -28,6 +29,11 @@ public class UserDao {
     }
 
     public User findOne(int id) {
-        return users.stream().filter(user -> user.getId() == id).findFirst().get();
+        Optional<User> optionalUser = users.stream().filter(user -> user.getId() == id).findFirst();
+        if(optionalUser.isPresent()) {
+            return optionalUser.get();
+        } else {
+            throw new UserNotFoundException(String.format("User id %s not found", id));
+        }
     }
 }

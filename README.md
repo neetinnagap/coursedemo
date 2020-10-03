@@ -32,7 +32,15 @@ public User save(@RequestBody User user) {
     return userDao.save(user);
 }
 ```
+Custom not found exception:
+```java
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public class UserNotFoundException extends RuntimeException {
+    public UserNotFoundException(String message) {
+        super(message);
+    }
+}
+```
 
-Enabling debug loggin for spring framework:
+Enabling debug logging for spring framework:
 `logging.level.org.springframework=debug`
-
