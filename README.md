@@ -62,6 +62,13 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     }
 }
 ```
+### Validation
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-validation</artifactId>
+</dependency>
+```
 
 Enabling debug logging for spring framework:
 `logging.level.org.springframework=debug`
