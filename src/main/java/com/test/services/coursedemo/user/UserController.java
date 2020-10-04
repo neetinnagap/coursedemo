@@ -1,6 +1,7 @@
 package com.test.services.coursedemo.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -29,5 +30,10 @@ public class UserController {
         var createdUser = userDao.save(user);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
         return ResponseEntity.created(uri).build();
+    }
+
+    @DeleteMapping(path = "/users/{id}")
+    public ResponseEntity<String> delete(@PathVariable int id) {
+        return new ResponseEntity<>(userDao.delete(id), HttpStatus.OK);
     }
 }

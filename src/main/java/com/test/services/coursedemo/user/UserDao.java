@@ -36,4 +36,14 @@ public class UserDao {
             throw new UserNotFoundException(String.format("User id %s not found", id));
         }
     }
+
+    public String delete(int id) {
+        int index = users.indexOf(new User(id, "", null));
+        if(index != -1) {
+            users.remove(index);
+            return "Deleted";
+        } else {
+            throw new UserNotFoundException(String.format("User id %s not found", id));
+        }
+    }
 }
