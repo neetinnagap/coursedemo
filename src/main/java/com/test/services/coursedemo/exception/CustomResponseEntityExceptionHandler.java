@@ -1,8 +1,10 @@
 package com.test.services.coursedemo.exception;
 
 import com.test.services.coursedemo.user.UserNotFoundException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,13 +19,19 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
 
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<ExceptionResponse> handleAllExceptions(Exception ex, WebRequest request) throws Exception {
-        var exceptionResponse = new ExceptionResponse(ex.getMessage(), new Date());
+        var exceptionResponse = new ExceptionResponse(ex.getMessage(), ex.getStackTrace().toString(), new Date());
         return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(UserNotFoundException.class)
     public final ResponseEntity<ExceptionResponse> handleUserNotFoundException(Exception ex, WebRequest request) throws Exception {
-        var exceptionResponse = new ExceptionResponse(ex.getMessage(), new Date());
+        var exceptionResponse = new ExceptionResponse(ex.getMessage(), ex.getStackTrace().toString(), new Date());
         return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        var exceptionResponse = new ExceptionResponse("Validation Failed!", ex.getBindingResult().toString(), new Date());
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 }

@@ -69,6 +69,29 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     <artifactId>spring-boot-starter-validation</artifactId>
 </dependency>
 ```
+Adding validation:
+```java
+@PostMapping(path = "/users")
+public ResponseEntity<Object> save(@Valid @RequestBody User user) {
+```
+
+```java
+@Size(min=2, message = "Name should be atleast 2 characters in length")
+private String name;
+
+@Past(message = "Birth date cannot be in future")
+private Date birthData;
+```
+
+Enabling custom error json response:
+```java
+//inside your exception handler override:
+@Override
+protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    var exceptionResponse = new ExceptionResponse("Validation Failed!", ex.getBindingResult().toString(), new Date());
+    return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+}
+```
 
 Enabling debug logging for spring framework:
 `logging.level.org.springframework=debug`

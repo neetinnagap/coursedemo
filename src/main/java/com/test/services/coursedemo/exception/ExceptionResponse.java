@@ -6,7 +6,8 @@ import java.util.Date;
 
 public class ExceptionResponse {
     private String message;
-    private Date date;
+    private String details;
+    private Date timestamp;
 
     public String getMessage() {
         return message;
@@ -16,16 +17,25 @@ public class ExceptionResponse {
         this.message = message;
     }
 
-    public Date getDate() {
-        return date;
+    public String getDetails() {
+        return details;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDetails(String details) {
+        this.details = details;
     }
 
-    public ExceptionResponse(String message, Date date) {
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public ExceptionResponse(String message, String details, Date timestamp) {
         this.message = message;
-        this.date = date;
+        this.details = details;
+        this.timestamp = timestamp;
     }
 }
